@@ -1,3 +1,4 @@
+#BUAT SCHEMA DB
 CREATE DATABASE db_percobaanPrediksi
 GO
 USE db_percobaanPrediksi
@@ -45,83 +46,16 @@ INSERT INTO ujicoba (tahun, bulan, angka) VALUES (2020, 12, 57)
 INSERT INTO ujicoba (tahun, bulan, angka) VALUES (2021, 1, 47)
 INSERT INTO ujicoba (tahun, bulan, angka) VALUES (2022, 2, 45)
 
-#PERCOBAAN 1
-DECLARE @angka INT, @temp INT, @i INT, @k INT
-SET @i = 0
-SET @k = 1
-SET @angka = 0
-SET @temp = 0
-
-WHILE @i <= 15
-	BEGIN
-		WHILE @k <= 3
-			BEGIN
-				SELECT @angka = angka FROM ujicoba WHERE id = @k
-				SET @temp = @temp + @angka 
-				SET @k = @k + 1
-			END
-		PRINT @temp
-		SET @i = @i + 3
-		SET
-	END
-
-
-#PERCOBAAN 2
-SELECT * FROM ujicoba
-DECLARE @jml INT, @id1 DECIMAL, @id2 DECIMAL, @id3 DECIMAL, @iterasi INT, @hasilPrediksi DECIMAL, @rata2bergerak INT
-DECLARE @idKet VARCHAR(30)
-SET @id1 = 1
-SET @id2 = 2
-SET @id3 = 3
-SET @iterasi = 1
-SET @rata2bergerak = 3
-SELECT @jml = COUNT(id) FROM ujicoba
-IF (@jml % 3 = 0)
-	WHILE @iterasi <= (@jml+1)
-		BEGIN
-			SET @rata2bergerak = 1 + @rata2bergerak
-			SET @hasilPrediksi = 0
-			SELECT @hasilPrediksi = (SUM(angka)/3) FROM ujicoba WHERE id IN (@id1, @id2, @id3)
-			SET @idKet = CONVERT(VARCHAR(5), @id3)
-			SET @id1 = @id1 + 1
-			SET @id2 = @id2 + 1
-			SET @id3 = @id3 + 1
-			INSERT INTO hasilUjiCoba (id, angkaPrediksi) VALUES (@idKet, @hasilPrediksi)
-			IF @rata2bergerak = (@jml + 1)
-				BREAK
-		END
-ELSE
-	PRINT 'Tidak dapat mengeksekusi data, banyak data harus kelipatan 3'
 
 
 
-DECLARE @no INT
-DECLARE @angkaPrediksi DECIMAL
-DECLARE dataPrediksi CURSOR FOR
-	SELECT * FROM hasilUjiCoba
-
-OPEN dataPrediksi
-FETCH NEXT FROM dataPrediksi INTO @no, @angkaPrediksi
-PRINT 'ID	' + '	PREDIKSI'
-WHILE @@FETCH_STATUS = 0
-	BEGIN
-		PRINT CONVERT(VARCHAR(3),@no) + '			' + CONVERT(VARCHAR(3),@angkaPrediksi)
-		FETCH NEXT FROM dataPrediksi INTO @no, @angkaPrediksi
-	END
-CLOSE dataPrediksi
-DEALLOCATE dataPrediksi
-
-
-
-SELECT * FROM hasilUjiCoba
-DELETE FROM hasilUjiCoba WHERE angkaPrediksi IS NULL OR id BETWEEN 16 AND 17
-TRUNCATE TABLE hasilUjiCoba
+	
 
 
 
 
 
-#PERCOBAAN 3
+#PERHITUNGAN FORECAST ALGORITMA SMA
 
 --
 DECLARE @jml INT, @id1 DECIMAL, @id2 DECIMAL, @id3 DECIMAL, @iterasi INT, @hasilPrediksi DECIMAL, @rata2bergerak INT
