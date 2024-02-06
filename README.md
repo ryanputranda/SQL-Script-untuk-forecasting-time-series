@@ -1,5 +1,5 @@
 # SQL-Script-untuk-forecasting-time-series
-##Script SQL untuk forecasting data time series menggunakan algoritma Simple Moving Average
+## Script SQL untuk forecasting data time series menggunakan algoritma Simple Moving Average
 
 Langkah:
 1. Script ini dibuat dengan Ms SQL Server 2012
